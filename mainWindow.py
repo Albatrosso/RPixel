@@ -19,9 +19,9 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName("gridLayout")
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setMinimumSize(QtCore.QSize(720, 480))
-        self.label.setMaximumSize(QtCore.QSize(720, 480))
+        self.label = WebcamWidget(self.centralwidget)
+        self.label.setMinimumSize(QtCore.QSize(980, 740))
+        self.label.setMaximumSize(QtCore.QSize(980, 740))
         self.label.setStyleSheet("background-color:rgb(50,50,50);")
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
@@ -126,8 +126,125 @@ class Ui_MainWindow(object):
         self.prefix_lineEdit = QtWidgets.QLineEdit(self.widget_4)
         self.prefix_lineEdit.setMaximumSize(QtCore.QSize(300, 16777215))
         self.prefix_lineEdit.setObjectName("prefix_lineEdit")
+        self.prefix_lineEdit.setReadOnly(True)
+        self.prefix_lineEdit.setPlaceholderText("Fill the fields below")
         self.horizontalLayout_3.addWidget(self.prefix_lineEdit)
         self.verticalLayout_3.addWidget(self.widget_4, 0, QtCore.Qt.AlignHCenter)
+        #### Structured prefix fields
+        self.widget_10 = QtWidgets.QWidget(self.widget_5)
+        self.widget_10.setMinimumSize(QtCore.QSize(400, 0))
+        self.widget_10.setMaximumSize(QtCore.QSize(400, 16777215))
+        self.widget_10.setStyleSheet("background-color:rgb(45,45,45);")
+        self.widget_10.setObjectName("widget_10")
+        self.formLayout_prefix = QtWidgets.QFormLayout(self.widget_10)
+        self.formLayout_prefix.setObjectName("formLayout_prefix")
+        self.prefix_taxon = QtWidgets.QLineEdit(self.widget_10)
+        self.prefix_taxon.setPlaceholderText("TetraSP001")
+        self.prefix_taxon.setObjectName("prefix_taxon")
+        self.formLayout_prefix.addRow("Taxon", self.prefix_taxon)
+        self.prefix_structure = QtWidgets.QComboBox(self.widget_10)
+        self.prefix_structure.setEditable(True)
+        self.prefix_structure.setObjectName("prefix_structure")
+        self.formLayout_prefix.addRow("Structure", self.prefix_structure)
+        self.prefix_view = QtWidgets.QComboBox(self.widget_10)
+        self.prefix_view.setEditable(True)
+        self.prefix_view.setObjectName("prefix_view")
+        self.formLayout_prefix.addRow("View", self.prefix_view)
+        self.prefix_microscope = QtWidgets.QComboBox(self.widget_10)
+        self.prefix_microscope.setEditable(True)
+        self.prefix_microscope.setObjectName("prefix_microscope")
+        self.formLayout_prefix.addRow("Microscope", self.prefix_microscope)
+        self.prefix_magnification = QtWidgets.QComboBox(self.widget_10)
+        self.prefix_magnification.setEditable(True)
+        self.prefix_magnification.setObjectName("prefix_magnification")
+        self.formLayout_prefix.addRow("Magnification", self.prefix_magnification)
+        self.verticalLayout_3.addWidget(self.widget_10, 0, QtCore.Qt.AlignHCenter)
+        #### Image format row
+        self.widget_7 = QtWidgets.QWidget(self.widget_5)
+        self.widget_7.setMinimumSize(QtCore.QSize(400, 0))
+        self.widget_7.setMaximumSize(QtCore.QSize(400, 60))
+        self.widget_7.setStyleSheet("background-color:rgb(45,45,45);")
+        self.widget_7.setObjectName("widget_7")
+        self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.widget_7)
+        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
+        self.label_5 = QtWidgets.QLabel(self.widget_7)
+        self.label_5.setObjectName("label_5")
+        self.horizontalLayout_5.addWidget(self.label_5)
+        self.format_combo = QtWidgets.QComboBox(self.widget_7)
+        self.format_combo.setObjectName("format_combo")
+        self.format_combo.addItems(["png", "jpg", "tiff"])
+        self.horizontalLayout_5.addWidget(self.format_combo)
+        self.verticalLayout_3.addWidget(self.widget_7, 0, QtCore.Qt.AlignHCenter)
+        #### Scale bar group
+        self.group_scalebar = QtWidgets.QGroupBox(self.widget_5)
+        self.group_scalebar.setMaximumSize(QtCore.QSize(400, 16777215))
+        self.group_scalebar.setStyleSheet("background-color:rgb(45,45,45);")
+        self.group_scalebar.setObjectName("group_scalebar")
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.group_scalebar)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.checkbox_show_scalebar = QtWidgets.QCheckBox(self.group_scalebar)
+        self.checkbox_show_scalebar.setChecked(False)
+        self.checkbox_show_scalebar.setObjectName("checkbox_show_scalebar")
+        self.verticalLayout_4.addWidget(self.checkbox_show_scalebar)
+        self.label_scalebar_status = QtWidgets.QLabel(self.group_scalebar)
+        self.label_scalebar_status.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_scalebar_status.setObjectName("label_scalebar_status")
+        self.verticalLayout_4.addWidget(self.label_scalebar_status)
+        self.widget_8 = QtWidgets.QWidget(self.group_scalebar)
+        self.widget_8.setObjectName("widget_8")
+        self.horizontalLayout_6 = QtWidgets.QHBoxLayout(self.widget_8)
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.button_calibrate_scale = QtWidgets.QPushButton(self.widget_8)
+        self.button_calibrate_scale.setObjectName("button_calibrate_scale")
+        self.horizontalLayout_6.addWidget(self.button_calibrate_scale)
+        self.button_load_scalebar = QtWidgets.QPushButton(self.widget_8)
+        self.button_load_scalebar.setObjectName("button_load_scalebar")
+        self.horizontalLayout_6.addWidget(self.button_load_scalebar)
+        self.verticalLayout_4.addWidget(self.widget_8)
+        self.formLayout_scalebar = QtWidgets.QFormLayout()
+        self.formLayout_scalebar.setObjectName("formLayout_scalebar")
+        self.scalebar_length = QtWidgets.QDoubleSpinBox(self.group_scalebar)
+        self.scalebar_length.setDecimals(4)
+        self.scalebar_length.setMinimum(0.0001)
+        self.scalebar_length.setMaximum(100000.0)
+        self.scalebar_length.setValue(0.5)
+        self.scalebar_length.setObjectName("scalebar_length")
+        self.scalebar_unit = QtWidgets.QComboBox(self.group_scalebar)
+        self.scalebar_unit.addItems(["mm", "µm", "cm"])
+        self.scalebar_unit.setObjectName("scalebar_unit")
+        self.widget_9 = QtWidgets.QWidget(self.group_scalebar)
+        self.widget_9.setObjectName("widget_9")
+        self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.widget_9)
+        self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
+        self.horizontalLayout_7.addWidget(self.scalebar_length)
+        self.horizontalLayout_7.addWidget(self.scalebar_unit)
+        self.formLayout_scalebar.addRow("Bar length", self.widget_9)
+        self.scalebar_thickness = QtWidgets.QSpinBox(self.group_scalebar)
+        self.scalebar_thickness.setMinimum(1)
+        self.scalebar_thickness.setMaximum(50)
+        self.scalebar_thickness.setValue(4)
+        self.scalebar_thickness.setObjectName("scalebar_thickness")
+        self.formLayout_scalebar.addRow("Thickness", self.scalebar_thickness)
+        self.scalebar_position = QtWidgets.QComboBox(self.group_scalebar)
+        self.scalebar_position.addItems(["bottom-right", "bottom-left", "top-right", "top-left"])
+        self.scalebar_position.setObjectName("scalebar_position")
+        self.formLayout_scalebar.addRow("Position", self.scalebar_position)
+        self.button_scalebar_color = QtWidgets.QPushButton(self.group_scalebar)
+        self.button_scalebar_color.setStyleSheet("background-color:rgb(255,255,255);color:black;")
+        self.button_scalebar_color.setObjectName("button_scalebar_color")
+        self.formLayout_scalebar.addRow("Color", self.button_scalebar_color)
+        self.verticalLayout_4.addLayout(self.formLayout_scalebar)
+        self.verticalLayout_3.addWidget(self.group_scalebar)
+        #### Multistack progress bar
+        self.progressBar = QtWidgets.QProgressBar(self.widget_5)
+        self.progressBar.setMaximumSize(QtCore.QSize(400, 16777215))
+        self.progressBar.setMaximum(1)
+        self.progressBar.setValue(0)
+        self.progressBar.setFormat("%v / %m frames")
+        self.progressBar.setObjectName("progressBar")
+        self.progressBar.hide()  # only visible while a multistack sequence runs
+        self.verticalLayout_3.addWidget(self.progressBar)
         self.gridLayout.addWidget(self.widget_5, 2, 0, 1, 1)
         ####
         self.buttonStatus = QtWidgets.QPushButton(self.centralwidget)
@@ -152,6 +269,8 @@ class Ui_MainWindow(object):
         self.menuFile.setObjectName("menuFile")
         self.menuEdit = QtWidgets.QMenu(self.menubar)
         self.menuEdit.setObjectName("menuEdit")
+        self.menuCamera = QtWidgets.QMenu(self.menubar)
+        self.menuCamera.setObjectName("menuCamera")
         self.menuAbout = QtWidgets.QMenu(self.menubar)
         self.menuAbout.setObjectName("menuAbout")
         MainWindow.setMenuBar(self.menubar)
@@ -166,12 +285,16 @@ class Ui_MainWindow(object):
         self.actionSet_prefix.setObjectName("actionSet_prefix")
         self.actionGitHub = QtWidgets.QAction(MainWindow)
         self.actionGitHub.setObjectName("actionGitHub")
+        self.actionCamera_settings = QtWidgets.QAction(MainWindow)
+        self.actionCamera_settings.setObjectName("actionCamera_settings")
         self.menuFile.addAction(self.actionNew)
         self.menuFile.addAction(self.actionOpen)
         self.menuEdit.addAction(self.actionSet_prefix)
+        self.menuCamera.addAction(self.actionCamera_settings)
         self.menuAbout.addAction(self.actionGitHub)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuEdit.menuAction())
+        self.menubar.addAction(self.menuCamera.menuAction())
         self.menubar.addAction(self.menuAbout.menuAction())
 
         self.retranslateUi(MainWindow)
@@ -184,32 +307,65 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "No. Frames"))
         self.label_2.setText(_translate("MainWindow", "Seconds in between"))
         self.label_4.setText(_translate("MainWindow", "Prefix"))
+        self.label_5.setText(_translate("MainWindow", "Format"))
+        self.group_scalebar.setTitle(_translate("MainWindow", "Scale bar"))
+        self.checkbox_show_scalebar.setText(_translate("MainWindow", "Show scale bar"))
+        self.label_scalebar_status.setText(_translate("MainWindow", "No scale bar loaded"))
+        self.button_calibrate_scale.setText(_translate("MainWindow", "Calibrate scale"))
+        self.button_load_scalebar.setText(_translate("MainWindow", "Load scale bar"))
+        self.button_scalebar_color.setText(_translate("MainWindow", "Pick color"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuEdit.setTitle(_translate("MainWindow", "Edit"))
+        self.menuCamera.setTitle(_translate("MainWindow", "Camera"))
         self.menuAbout.setTitle(_translate("MainWindow", "About"))
         self.actionNew.setText(_translate("MainWindow", "New.."))
         self.actionOpen.setText(_translate("MainWindow", "Open..."))
         self.actionSet_prefix.setText(_translate("MainWindow", "Set_prefix"))
         self.actionGitHub.setText(_translate("MainWindow", "GitHub"))
+        self.actionCamera_settings.setText(_translate("MainWindow", "Settings..."))
 
 
 # DD. DISPLAY_WIDGET
 # displayWidget = WebcamWidget(QLabel)
 # interp. a child class optimized for event controlling
 class WebcamWidget(QtWidgets.QLabel):
+    # emitted with (start_pos, end_pos) as QPoints when the user finishes
+    # dragging a reference line in calibration mode
+    line_drawn = QtCore.pyqtSignal(object)
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setMouseTracking(True)
+        self.calibration_mode = False
+        self.line_start = None
+        self.line_end = None
 
     def enterEvent(self, event):
-        """Hide the cursor when the mouse enters the widget."""
-        self.setCursor(Qt.BlankCursor)
+        """Hide the cursor when the mouse enters the widget (except while calibrating)."""
+        if not self.calibration_mode:
+            self.setCursor(Qt.BlankCursor)
+        else:
+            self.setCursor(Qt.CrossCursor)
         cursor_settings["in_display"] = True
 
     def leaveEvent(self, event):
         """Restore the cursor when the mouse leaves the widget."""
         self.setCursor(Qt.ArrowCursor)
         cursor_settings["in_display"] = False
+
+    def mousePressEvent(self, event):
+        if self.calibration_mode and event.button() == Qt.LeftButton:
+            self.line_start = event.pos()
+            self.line_end = event.pos()
+
+    def mouseMoveEvent(self, event):
+        if self.calibration_mode and self.line_start is not None:
+            self.line_end = event.pos()
+
+    def mouseReleaseEvent(self, event):
+        if self.calibration_mode and event.button() == Qt.LeftButton and self.line_start is not None:
+            self.line_end = event.pos()
+            self.line_drawn.emit((self.line_start, self.line_end))
 
 if __name__ == "__main__":
     print("call the script main.py instead...")

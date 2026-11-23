@@ -40,7 +40,7 @@ import time
 
 
 cap = Picamera2() 
-cap.preview_configuration.main.size = (640,480)
+cap.preview_configuration.main.size = (980, 740)
 cap.preview_configuration.main.format = "RGB888"
 cap.preview_configuration.align() 
 cap.configure("preview")
@@ -72,4 +72,63 @@ display_settings = {"image":None, "mask":None}
 
 cursor_settings = {"in_display":False}
 
-os_settings = {"project_folder":"", "current_folder":"", "current_prefix":""}
+os_settings = {"project_folder":"", "current_folder":"", "current_prefix":"", "format":"png"}
+
+# DD. SCALE_SETTINGS
+# scale_settings = {"calibration":dict|None, "color":(int,int,int)}
+# interp. global scale bar state. "calibration" holds the loaded calibration dict
+# {"name":str, "pixels":float, "distance":float, "unit":str} measured on the 980x740 preview;
+# "color" is the bar color as an RGB tuple
+scale_settings = {"calibration":None, "color":(255, 255, 255)}
+
+# DD. CALIBRATIONS_DIR
+# calibrations_dir = str
+# interp. folder where scale bar calibrations are stored as <name>.json files
+CALIBRATIONS_DIR = jn(os.path.dirname(os.path.abspath(__file__)), "calibrations")
+os.makedirs(CALIBRATIONS_DIR, exist_ok=True)
+
+# DD. CAMERA_SETTINGS
+# camera_settings = {"brightness":float, "contrast":float, "saturation":float,
+#                    "awb":str, "gain_red":float, "gain_blue":float}
+# interp. image tuning parameters applied to the camera through picamera2 controls.
+# brightness in [-1.0, 1.0]; contrast and saturation in [0.0, 2.0]; awb is one of
+# AWB_MODES or "manual", in which case gain_red/gain_blue are used as ColourGains;
+# flip_h/flip_v mirror the preview and the saved photos horizontally/vertically
+camera_settings = {"brightness":0.0, "contrast":1.0, "saturation":1.0,
+                   "awb":"auto", "gain_red":1.0, "gain_blue":1.0,
+                   "flip_h":False, "flip_v":False}
+
+# DD. AWB_MODES
+# interp. mapping from white balance preset name to its libcamera AwbMode value
+AWB_MODES = {"auto":0, "tungsten":1, "fluorescent":2, "indoor":3, "daylight":4, "cloudy":5}
+
+# DD. PRESETS_FILE
+# interp. JSON file storing named camera settings presets
+# {"preset_name": {"brightness":float, "contrast":float, ...}}
+PRESETS_FILE = jn(os.path.dirname(os.path.abspath(__file__)), "camera_presets.json")
+
+# DD. UNIT_TO_MM
+# interp. conversion factor from each supported scale bar unit to millimeters
+UNIT_TO_MM = {"mm": 1.0, "µm": 0.001, "cm": 10.0}
+
+# DD. NOMENCLATURE_FILE
+# interp. user-editable file listing the allowed 3-letter structure codes and
+# single-letter orthographic views used to validate the structured prefix fields
+NOMENCLATURE_FILE = jn(os.path.dirname(os.path.abspath(__file__)), "nomenclature.txt")
+DEFAULT_NOMENCLATURE = """# Nomenclature for structured image prefixes.
+# Edit this file while the application is CLOSED, then restart it to apply changes.
+# Lines starting with '#' are comments. Format: key=value1,value2,value3
+
+# 3-letter codes for anatomical structures / body parts
+structures=pro,opi,che,ped,leg,spi,epi
+
+# Single-letter orthographic views:
+# d=dorsal, v=ventral, l=lateral, a=anterior, p=posterior/prolateral, r=retrolateral
+views=d,v,l,a,p,r
+"""
+
+# DD. PREVIEW_SIZE
+# interp. resolution of the preview frame shown in the display label, used to scale
+# scale bar measurements up to the full sensor resolution at capture time
+PREVIEW_WIDTH = 980
+PREVIEW_HEIGHT = 740
