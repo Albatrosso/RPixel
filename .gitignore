@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+
+KeatsIsland_Oct14/
+calibrations/
+libfreenect/
+
+camera_presets.json
+nomenclature.txt
+image.jpg
+photo.jpg
